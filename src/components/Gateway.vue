@@ -6,7 +6,7 @@
             <b-form-input id="smsTo"
                           type="text" 
                           v-model="sms.to"
-                          placeholder="Enter email"
+                          placeholder="Enter phone number here..."
                           required>
             </b-form-input>
           </b-form-group>
@@ -16,7 +16,8 @@
             <b-form-textarea id="smsText"
                              v-model="sms.text"
                              rows="3"
-                             placeholder="Text something...">
+                             placeholder="Text something..."
+                             required>
             </b-form-textarea>
         </b-form-group>
 
@@ -43,4 +44,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>
 

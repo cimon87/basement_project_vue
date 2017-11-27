@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable type="light" variant="light">
-      <router-link tag="b-navbar-brand" class="pointer" to="/">Basement Panel</router-link>
+      <router-link tag="b-navbar-brand" class="pointer" to="/" id="home">Basement Panel</router-link>
       <b-navbar-nav class="ml-auto">
         <router-link tag="div" to="/phone" size="md">
           <b-button variant="outline-success" class="my-2 my-sm-0" right exact>Phone</b-button>
@@ -22,14 +22,22 @@
 <script>
   export default {
     data () {
-      return {
-      }
+      return {}
     }
   }
 </script>
 
 <style scoped>
   .pointer:hover {
+    cursor: pointer;
+  }
+  #home {
+    color: #28a745
+  }
+  button  {
+    margin: 2px
+  }
+  :hover {
     cursor: pointer;
   }
 </style>

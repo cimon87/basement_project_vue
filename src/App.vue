@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <app-header />
+    <div id='content'>
     <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -15,5 +17,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#content { 
+  margin: 1.5rem
+}
+</style>
 
 
