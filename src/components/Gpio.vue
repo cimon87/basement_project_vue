@@ -1,14 +1,14 @@
 /* eslint-disable */ 
 <template>
     <div>
-        <p>Logs</p>
+        <p>GPIO</p>
     </div>
 </template>
 <script>
 export default {
   data () {
     return {
-    } 
+    }
   }
 }
 </script>

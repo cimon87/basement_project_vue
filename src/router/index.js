@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Phone from '@/components/Phone'
-import Gateway from '@/components/Gateway'
-import Logs from '@/components/Logs'
+import * as Components from '@/components/all'
 
 Vue.use(Router)
 
@@ -12,27 +9,27 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Components.Home
     },
     {
       path: '/phone',
       name: 'Phone',
-      component: Phone
+      component: Components.Phone
     },
     {
       path: '/gateway',
       name: 'SMS Gateway',
-      component: Gateway
+      component: Components.Gateway
     },
     {
       path: '/logs',
       name: 'Logs',
-      component: Logs
+      component: Components.Logs
     },
     {
       path: '/logs',
       name: 'Logs',
-      component: Gpio
+      component: Components.Gpio
     }
   ]
 })
