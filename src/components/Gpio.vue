@@ -1,14 +1,14 @@
 /* eslint-disable */ 
 <template>
     <div>
-        <p>Phone</p>
+        <p>Logs</p>
     </div>
 </template>
 <script>
 export default {
   data () {
     return {
-    }
+    } 
   }
 }
 </script>
