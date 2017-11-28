@@ -17,6 +17,9 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
+    "quotes": ["error", "double"],
+    "semi" : "off",
+    "space-before-function-paren": "off",
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await

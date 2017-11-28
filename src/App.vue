@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
 #content { 
-  margin: 1.5rem
+  margin: 16px
 }
 </style>
 
