@@ -17,7 +17,7 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
-    "quotes": ["error", "double"],
+    "quotes": "off",
     "semi" : "off",
     "space-before-function-paren": "off",
     // allow paren-less arrow functions
