@@ -28,23 +28,24 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       sms: {
-        to: '',
-        text: ''
+        to: "",
+        text: ""
       }
-    }
+    };
   },
   methods: {
-    onSend (event) {
-      console.log('To: $(this.sms.to)')
-      console.log('Text: $(this.sms.text)')
+    onSend(event) {
+      console.log("To: $(this.sms.to)");
+      console.log("Text: $(this.sms.text)");
     }
   }
-}
+};
 </script>
 
 <style scoped>
+
 </style>
 
