@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h5>Security: </h5>
+        <h6>Security: </h6>
         <b-form-radio-group v-model="securityEnabled" 
                             :options="options" 
                             buttons 
@@ -10,7 +10,7 @@
         <br>
         <br>
 
-        <h5>Silent mode: </h5>
+        <h6>Silent mode: </h6>
         <b-form-radio-group v-model="silentModeEnabled"
                             :options="options" 
                             buttons
@@ -20,7 +20,7 @@
         <br>
         <br>
 
-        <h5>Silent mode: </h5>
+        <h6>Sm mode: </h6>
         <b-form-radio-group v-model="smsEnabled" 
                             :options="options" 
                             buttons

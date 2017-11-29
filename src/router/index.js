@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import * as Components from '@/components/all'
+import * as Components from '@/components'
 
 Vue.use(Router)
 
@@ -27,8 +27,8 @@ export default new Router({
       component: Components.Logs
     },
     {
-      path: '/logs',
-      name: 'Logs',
+      path: '/gpio',
+      name: 'Gpio',
       component: Components.Gpio
     }
   ]
