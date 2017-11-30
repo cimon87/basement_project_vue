@@ -1,7 +1,7 @@
 <template>
     <div>
         <template v-for="(gpio, index) in gpios">
-          <h6>{{ gpio.Description }} ({{gpio.PinName}})</h6>
+          <h6>{{ gpio.Description }} <small>({{gpio.PinName}})</small></h6>
           <b-form-radio-group :options="options" 
                               v-on:click="changeState"
                               buttons

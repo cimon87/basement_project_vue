@@ -10,7 +10,7 @@
           <b-button variant="outline-primary" class="my-2 my-sm-0" right exact>GPIO</b-button>
         </router-link>
         <router-link tag="div" to="/gateway" size="md">
-          <b-button variant="outline-primary" class="my-2 my-sm-0" right exact>SMS Gateway</b-button>
+          <b-button variant="outline-primary" class="my-2 my-sm-0" right exact>SMS</b-button>
         </router-link>
         <router-link tag="div" to="/logs" size="md">
           <b-button variant="outline-primary" class="my-2 my-sm-0" right exact>Logs</b-button>
@@ -29,15 +29,12 @@
 
 <style scoped>
   .pointer:hover {
-    cursor: pointer;
-  }
-  #home {
-    color: gray
+    cursor: pointer
   }
   button  {
     margin: 2px
   }
   :hover {
-    cursor: pointer;
+    cursor: pointer
   }
 </style>

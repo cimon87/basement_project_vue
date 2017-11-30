@@ -4,10 +4,11 @@
           <b-form-group label="To:"
                         label-for="smsTo">
             <b-form-input id="smsTo"
-                          type="text" 
+                          type="number"
                           v-model="sms.to"
                           placeholder="Enter phone number here..."
                           required>
+                          {{ this.sms.to }}
             </b-form-input>
           </b-form-group>
 
@@ -31,7 +32,7 @@ export default {
   data() {
     return {
       sms: {
-        to: "",
+        to: "48",
         text: ""
       }
     };
@@ -45,7 +46,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+#smsCountry, #smsTo {
+  display: inline-block;
+}
 
 </style>
 
