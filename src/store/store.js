@@ -1,27 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import ApiModule from './apiModule';
 
 Vue.use(Vuex)
 
-const state = {
-  count: 0
-}
-
-const mutations = {
-}
-
-const actions = {
-
-}
-
-// getters are functions
-const getters = {
-
-}
-
 export default new Vuex.Store({
-  state,
-  getters,
-  actions,
-  mutations
+  modules: {
+    basementApi: ApiModule
+  }
 })

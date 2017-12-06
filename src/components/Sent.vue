@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TableFormatter from '@/Formatters';
+import TableFormatter from '@/formatters';
 
 export default {
   data() {

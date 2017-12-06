@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card no-body>
-      <b-tabs card v-model="tabIndex">
+      <b-tabs card>
         <b-tab title="Inbox">
           <app-inbox id="inbox"></app-inbox>
         </b-tab>

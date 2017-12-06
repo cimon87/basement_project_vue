@@ -8,6 +8,7 @@
 <script>
   import LogType from '@/Statics/LogType';
   import RowVariant from '@/Statics/RowVariant';
+  import TableFormatter from '@/formatters';
 
   export default {
     data() {
@@ -23,11 +24,7 @@
           {
             key: 'timestamp',
             label: "Date",
-            formatter: (value, key, item) => {
-              let parsedDate = new Date(value);
-              let [date, time] = parsedDate.toLocaleString('pl-PL').split(', ');
-              return date + ' ' + time;
-            },
+            formatter: TableFormatter.dateFormatter,
             sortable: true
           }
         ]
