@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-table outlined striped  hover :items="inbox" :fields="tabFields">
+    <b-table stacked  :items="inbox" :fields="tabFields">
       <template slot="ReceivingDateTime">
          
       </template>
