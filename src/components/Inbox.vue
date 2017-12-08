@@ -1,6 +1,9 @@
 <template>
   <div>
-    <b-table stacked  :items="inbox" :fields="tabFields">
+    <b-alert :show="showError" dismissible variant="danger">
+      {{ requestError }}
+    </b-alert>
+    <b-table striped hover :busy.sync="isLoading" :items="inboxList" :fields="tabFields">
       <template slot="ReceivingDateTime">
          
       </template>
@@ -9,15 +12,21 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import TableFormatter from '@/formatters'
+import { mapActions, mapGetters } from 'vuex';
+import TableFormatter from '@/formatters';
+
 export default {
   computed: {
-    inbox () {
-      return this.$store.getters['basementApi/inboxList'];
+    ...mapGetters({
+      inboxList: 'basementApi/inboxList',
+      requestError: 'basementApi/error',
+      isLoading: 'basementApi/isLoading'
+    }),
+    showError () {
+      return this.requestError !== undefined;
     }
   },
-  mounted () {
+  created () {
     this.getInbox();
   },
   methods: {
@@ -27,6 +36,7 @@ export default {
   },
   data () {
     return {
+      errorMesssage: "",
       tabFields: [
         { key: 'SenderNumber', label: "Sender", sortable: true },
         { key: 'TextDecoded', label: "Text", sortable: true },

@@ -1,35 +1,73 @@
 import basementApi from '@/basementApi'
 
-const getInboxUrl = "/messages/inbox"
+const getInboxUrl = "/messages/inbox";
+const getLogsUrl = "/logs";
 
 const state = {
   basementApi,
   inboxList: [],
-  sentList: []
+  sentList: [],
+  logsList: [],
+  error: undefined,
+  isLoading: false
 }
 
 const mutations = {
-  getInbox: (state, payload) => {
+  setInbox: (state, payload) => {
     state.inboxList = payload.data;
+  },
+  setLogs: (state, payload) => {
+    state.logsList = payload.data;
+    console.log(state.logsList);
+  },
+  setLoading: (state, isLoading) => {
+    state.isLoading = isLoading;
+  },
+  setError: (state, error) => {
+    state.error = error.message;
   }
 }
 
 const actions = {
   getInbox: (context) => {
-    return context.state.basementApi.get(getInboxUrl)
+    context.commit('setLoading', true);
+    return context.state.basementApi
+    .get(getInboxUrl)
     .then((response) => {
-      context.commit('getInbox', { data: response.data });
+      context.commit('setInbox', { data: response.data });
+      context.commit('setLoading', false);
     })
-    .catch((error) => {
-      console.log(error);
+    .catch((resp) => {
+      context.commit('setError', resp);
+    });
+  },
+  getLogs: (context) => {
+    context.commit('setLoading', true);
+    return context.state.basementApi
+    .get(getLogsUrl)
+    .then((response) => {
+      console.log(response);
+      context.commit('setLogs', { data: response.data });
+      context.commit('setLoading', false);
+    })
+    .catch((resp) => {
+      context.commit('setError', resp);
     });
   }
 }
 
-// getters are functions
 const getters = {
+  logsList: (state) => {
+    return state.logsList;
+  },
   inboxList: (state) => {
     return state.inboxList;
+  },
+  error: (state) => {
+    return state.error;
+  },
+  isLoading: (state) => {
+    return state.isLoading;
   }
 }
 

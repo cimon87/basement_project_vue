@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-const apiUrl = 'http://192.168.0.199:3000';
+const apiUrl = 'http://89.161.51.150:3000';
 
 let instance = Axios.create({
   baseURL: apiUrl,
