@@ -1,17 +1,36 @@
 <template>
   <div>
-    <b-table outlined striped  hover :items="items" :fields="tabFields">
-      <template slot="ReceivingDateTime">
-         
-      </template>
+    <b-alert :show="showError" dismissible variant="danger">
+      {{ requestError }}
+    </b-alert>
+    <b-table outlined striped hover :items="sentList" :fields="tabFields">
     </b-table>
   </div>
 </template>
 
 <script>
 import TableFormatter from '@/formatters';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
+  computed: {
+    ...mapGetters({
+      sentList: 'basementApi/sentList',
+      requestError: 'basementApi/error',
+      isLoading: 'basementApi/isLoading'
+    }),
+    showError () {
+      return this.requestError !== undefined;
+    }
+  },
+  created() {
+    this.getSentMessages();
+  },
+  methods: {
+    ...mapActions({
+      getSentMessages: 'basementApi/getSent'
+    })
+  },
   data() {
     return {
       items: [

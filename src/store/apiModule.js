@@ -1,7 +1,10 @@
 import basementApi from '@/basementApi'
 
 const getInboxUrl = "/messages/inbox";
+const getSentUrl = "/messages/sent";
 const getLogsUrl = "/logs";
+
+const setLoading = "setLoading";
 
 const state = {
   basementApi,
@@ -20,6 +23,9 @@ const mutations = {
     state.logsList = payload.data;
     console.log(state.logsList);
   },
+  setSentItems: (state, payload) => {
+    state.sentList = payload.data;
+  },
   setLoading: (state, isLoading) => {
     state.isLoading = isLoading;
   },
@@ -29,6 +35,19 @@ const mutations = {
 }
 
 const actions = {
+  getSent: (context) => {
+    context.commit(setLoading, true);
+    
+    return context.state.basementApi
+    .get(getSentUrl)
+    .then((response) => {
+      context.commit('setSentItems', { data: response.data });
+      context.commit(setLoading, false);
+    })
+    .catch((resp) => {
+      context.commit('setError', resp);
+    });
+  },
   getInbox: (context) => {
     context.commit('setLoading', true);
     return context.state.basementApi
