@@ -1,8 +1,9 @@
 <template>
   <div>
     <b-alert :show="showError" dismissible variant="danger">
-      {{ requestError }}
+      {{ errorMessageComputed }}
     </b-alert>
+    <b-button variant="outline-secondary">Refresh</b-button>
     <b-table outlined striped hover :items="sentList" :fields="tabFields">
     </b-table>
   </div>
@@ -16,34 +17,33 @@ export default {
   computed: {
     ...mapGetters({
       sentList: 'basementApi/sentList',
-      requestError: 'basementApi/error',
       isLoading: 'basementApi/isLoading'
     }),
     showError () {
-      return this.requestError !== undefined;
+      return this.errorMessage !== '';
+    },
+    errorMessageComputed () {
+      return this.errorMessage;
     }
   },
   created() {
-    this.getSentMessages();
+    this.getMessages();
   },
   methods: {
     ...mapActions({
       getSentMessages: 'basementApi/getSent'
-    })
+    }),
+    getMessages() {
+      this.getSentMessages()
+      .catch((error) => {
+        console.log(error);
+        this.errorMessage = error.message;
+      })
+    }
   },
   data() {
     return {
-      items: [
-        {
-          Id: 1,
-          Status: "Sent",
-          DestinationNumber: "+48603705226",
-          TextDecoded: "Lorem ipsum sth came etc ika",
-          SMSCNumber: "+482222222",
-          UpdatedInDB: new Date(),
-          InsertIntoDB: new Date()
-        }
-      ],
+      errorMessage: '',
       tabFields: [
         { label: "Id", key: "ID", sortable: true },
         { label: "Status", key: "Status", sortable: true },

@@ -4,6 +4,7 @@
           <h6>{{ gpio.Description }} <small>({{gpio.PinName}})</small></h6>
           <b-form-radio-group :options="options" 
                               v-on:click="changeState"
+                              v-bind:key="index"
                               buttons
                               button-variant="outline-primary"
                               v-model="gpio.State"
@@ -19,8 +20,8 @@ export default {
   data () {
     return {
       gpios: [
-        { Description: "LED", PinName: "Gpio 16", State: 1, ReadOnly: 0 },
-        { Description: "Contracton", PinName: "Gpio 20", State: 0, ReadOnly: 1 }
+        { Description: "LED", PinName: "Gpio 16", State: 1, ReadOnly: false },
+        { Description: "Contracton", PinName: "Gpio 20", State: 0, ReadOnly: true }
       ],
       options: [
         { text: "Off", value: 0 },

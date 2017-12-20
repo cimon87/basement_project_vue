@@ -19,20 +19,28 @@ export default {
   computed: {
     ...mapGetters({
       inboxList: 'basementApi/inboxList',
-      requestError: 'basementApi/error',
       isLoading: 'basementApi/isLoading'
     }),
+    requestError () {
+      return this.errorMessage;
+    },
     showError () {
-      return this.requestError !== undefined;
+      return this.errorMesssage !== '';
     }
   },
   created () {
-    this.getInbox();
+    this.getInboxLocal();
   },
   methods: {
     ...mapActions({
       getInbox: 'basementApi/getInbox'
-    })
+    }),
+    getInboxLocal() {
+      this.getInbox()
+      .catch((err) => {
+        this.errorMesssage = err.message;
+      })
+    }
   },
   data () {
     return {

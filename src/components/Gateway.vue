@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -38,9 +40,28 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      sendSms: 'basementApi/sendSms'
+    }),
+    sendSmsLocal(to, text) {
+      this.sendSms({to, text})
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    },
     onSend(event) {
-      console.log("To: $(this.sms.to)");
-      console.log("Text: $(this.sms.text)");
+      let smsTo = this.sms.to;
+      let smsText = this.sms.text;
+
+      let beginWith = smsTo.substring(0, 1);
+      if (beginWith !== '+') {
+        smsTo = '+' + smsTo;
+      }
+
+      this.sendSmsLocal(smsTo, smsText);
     }
   }
 };

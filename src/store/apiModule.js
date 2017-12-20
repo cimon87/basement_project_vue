@@ -1,7 +1,7 @@
 import basementApi from '@/basementApi'
 
 const getInboxUrl = "/messages/inbox";
-const getSentUrl = "/messages/sent";
+const messagesUrl = "/messages/send";
 const getLogsUrl = "/logs";
 
 const setLoading = "setLoading";
@@ -11,7 +11,6 @@ const state = {
   inboxList: [],
   sentList: [],
   logsList: [],
-  error: undefined,
   isLoading: false
 }
 
@@ -28,18 +27,19 @@ const mutations = {
   },
   setLoading: (state, isLoading) => {
     state.isLoading = isLoading;
-  },
-  setError: (state, error) => {
-    state.error = error.message;
   }
 }
 
 const actions = {
+  sendSms: (context, data) => {
+    console.log(data);
+    return context.state.basementApi
+    .post(messagesUrl, data);
+  },
   getSent: (context) => {
     context.commit(setLoading, true);
-    
     return context.state.basementApi
-    .get(getSentUrl)
+    .get(messagesUrl)
     .then((response) => {
       context.commit('setSentItems', { data: response.data });
       context.commit(setLoading, false);
@@ -55,9 +55,6 @@ const actions = {
     .then((response) => {
       context.commit('setInbox', { data: response.data });
       context.commit('setLoading', false);
-    })
-    .catch((resp) => {
-      context.commit('setError', resp);
     });
   },
   getLogs: (context) => {
@@ -68,9 +65,6 @@ const actions = {
       console.log(response);
       context.commit('setLogs', { data: response.data });
       context.commit('setLoading', false);
-    })
-    .catch((resp) => {
-      context.commit('setError', resp);
     });
   }
 }
@@ -82,11 +76,11 @@ const getters = {
   inboxList: (state) => {
     return state.inboxList;
   },
-  error: (state) => {
-    return state.error;
-  },
   isLoading: (state) => {
     return state.isLoading;
+  },
+  sentList: (state) => {
+    return state.sentList;
   }
 }
 
