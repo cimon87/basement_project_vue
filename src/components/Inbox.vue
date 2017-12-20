@@ -3,6 +3,7 @@
     <b-alert :show="showError" dismissible variant="danger">
       {{ requestError }}
     </b-alert>
+    <b-button variant="outline-secondary" @click="getInboxLocal">Refresh</b-button>
     <b-table striped hover :busy.sync="isLoading" :items="inboxList" :fields="tabFields">
       <template slot="ReceivingDateTime">
          
@@ -38,7 +39,8 @@ export default {
     getInboxLocal() {
       this.getInbox()
       .catch((err) => {
-        this.errorMesssage = err.message;
+        console.log(err);
+        this.errorMesssage = err.Message;
       })
     }
   },

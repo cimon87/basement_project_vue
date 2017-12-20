@@ -3,7 +3,7 @@
     <b-alert :show="showError" dismissible variant="danger">
       {{ errorMessageComputed }}
     </b-alert>
-    <b-button variant="outline-secondary">Refresh</b-button>
+    <b-button variant="outline-secondary" @click="getMessages">Refresh</b-button>
     <b-table outlined striped hover :items="sentList" :fields="tabFields">
     </b-table>
   </div>

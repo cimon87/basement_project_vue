@@ -43,9 +43,6 @@ const actions = {
     .then((response) => {
       context.commit('setSentItems', { data: response.data });
       context.commit(setLoading, false);
-    })
-    .catch((resp) => {
-      context.commit('setError', resp);
     });
   },
   getInbox: (context) => {
