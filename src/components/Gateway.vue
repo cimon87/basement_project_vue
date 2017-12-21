@@ -21,7 +21,12 @@
                              required>
             </b-form-textarea>
         </b-form-group>
-
+        <b-alert :variant="smsSendType"
+             dismissible
+             :show="showSmsStatus"
+             @dismissed="showSmsStatus=false">
+          {{ smsSendMessage }}
+        </b-alert>
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
   </div>
@@ -33,8 +38,11 @@ import { mapActions } from 'vuex';
 export default {
   data() {
     return {
+      showSmsStatus: false,
+      smsSendType: 'success',
+      smsSendMessage: '',
       sms: {
-        to: "48",
+        to: "48603705226",
         text: ""
       }
     };
@@ -47,9 +55,17 @@ export default {
       this.sendSms({to, text})
       .then((response) => {
         console.log(response);
+
+        this.smsSendType = 'success';
+        this.smsSendMessage = "Sent";
+        this.showSmsStatus = true;
       })
       .catch((error) => {
         console.log(error);
+
+        this.smsSendType = 'danger';
+        this.smsSendMessage = "Sth wrong. Check console logs";
+        this.showSmsStatus = true;
       })
     },
     onSend(event) {

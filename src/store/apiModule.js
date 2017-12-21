@@ -3,38 +3,66 @@ import basementApi from '@/basementApi'
 const getInboxUrl = "/messages/inbox";
 const messagesUrl = "/messages/send";
 const getLogsUrl = "/logs";
+const gpioUrl = "/gpio";
+const setGpio = "setGpio";
 
 const setLoading = "setLoading";
+const sending = "sending";
 
 const state = {
   basementApi,
   inboxList: [],
   sentList: [],
   logsList: [],
-  isLoading: false
+  gpioList: [],
+  isLoading: false,
+  sending: false
 }
 
 const mutations = {
+  setGpio: (state, payload) => {
+    state.gpioList = payload.data;
+  },
   setInbox: (state, payload) => {
     state.inboxList = payload.data;
   },
   setLogs: (state, payload) => {
     state.logsList = payload.data;
-    console.log(state.logsList);
   },
   setSentItems: (state, payload) => {
     state.sentList = payload.data;
   },
   setLoading: (state, isLoading) => {
     state.isLoading = isLoading;
+  },
+  sending: (state, sending) => {
+    state.sending = sending;
   }
 }
 
 const actions = {
-  sendSms: (context, data) => {
-    console.log(data);
+  getGpio(context) {
+    context.commit(setLoading, true);
     return context.state.basementApi
-    .post(messagesUrl, data);
+    .get(gpioUrl)
+    .then((response) => {
+      context.commit(setGpio, { data: response.data })
+      context.commit(setLoading, false);
+    })
+    .catch(() => {
+      context.commit(setLoading, false);
+    });
+  },
+  sendSms: (context, data) => {
+    context.commit(sending, true);
+    return context.state.basementApi
+    .post(messagesUrl, data)
+    .then(() => {
+      context.commit(sending, false);
+    })
+    .catch(() => {
+      context.commit(sending, false);
+    });
   },
   getSent: (context) => {
     context.commit(setLoading, true);
@@ -42,6 +70,9 @@ const actions = {
     .get(messagesUrl)
     .then((response) => {
       context.commit('setSentItems', { data: response.data });
+      context.commit(setLoading, false);
+    })
+    .catch(() => {
       context.commit(setLoading, false);
     });
   },
@@ -52,6 +83,9 @@ const actions = {
     .then((response) => {
       context.commit('setInbox', { data: response.data });
       context.commit('setLoading', false);
+    })
+    .catch(() => {
+      context.commit(setLoading, false);
     });
   },
   getLogs: (context) => {
@@ -62,6 +96,9 @@ const actions = {
       console.log(response);
       context.commit('setLogs', { data: response.data });
       context.commit('setLoading', false);
+    })
+    .catch(() => {
+      context.commit(setLoading, false);
     });
   }
 }
@@ -78,6 +115,9 @@ const getters = {
   },
   sentList: (state) => {
     return state.sentList;
+  },
+  gpioList: (state) => {
+    return state.gpioList;
   }
 }
 

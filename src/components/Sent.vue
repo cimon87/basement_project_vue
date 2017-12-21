@@ -4,7 +4,7 @@
       {{ errorMessageComputed }}
     </b-alert>
     <b-button variant="outline-secondary" @click="getMessages">Refresh</b-button>
-    <b-table outlined striped hover :items="sentList" :fields="tabFields">
+    <b-table outlined striped hover :busy.sync="isLoading"  :items="sentList" :fields="tabFields">
     </b-table>
   </div>
 </template>

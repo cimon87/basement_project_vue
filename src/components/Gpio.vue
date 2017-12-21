@@ -1,14 +1,13 @@
 <template>
     <div>
         <template v-for="(gpio, index) in gpios">
-          <h6>{{ gpio.Description }} <small>({{gpio.PinName}})</small></h6>
+          <h6>{{ gpio.Description }} <small>({{gpio.PinName}}{{ gpio.ReadOnly == 1 ? '- read-only' : '' }})</small></h6>
           <b-form-radio-group :options="options" 
-                              v-on:click="changeState"
+                              v-on:change="changeState(gpio, $event)"
                               v-bind:key="index"
                               buttons
                               button-variant="outline-primary"
-                              v-model="gpio.State"
-                              :disabled="gpio.ReadOnly">
+                              v-model="gpio.State">
           </b-form-radio-group>
           <br>
           <br>
@@ -16,13 +15,23 @@
     </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
+  created () {
+    this.getGpioLocal();
+  },
+  computed: {
+    ...mapGetters({
+      gpios: 'basementApi/gpioList'
+    })
+  },
   data () {
     return {
-      gpios: [
-        { Description: "LED", PinName: "Gpio 16", State: 1, ReadOnly: false },
-        { Description: "Contracton", PinName: "Gpio 20", State: 0, ReadOnly: true }
-      ],
+      // gpios2: [
+      //   { Description: "LED", PinName: "Gpio 16", State: 1, ReadOnly: false },
+      //   { Description: "Contracton", PinName: "Gpio 20", State: 0, ReadOnly: true }
+      // ],
       options: [
         { text: "Off", value: 0 },
         { text: "On", value: 1 }
@@ -30,8 +39,26 @@ export default {
     }
   },
   methods: {
-    changeState(event) {
+    ...mapActions({
+      getGpio: 'basementApi/getGpio'
+    }),
+    getGpioLocal() {
+      this.getGpio()
+      .catch((error) => {
+        console.log(error);
+      })
+    },
+    changeState(gpio, state) {
+      console.log(gpio.PinName);
+      console.log(state);
 
+      if (gpio.ReadOnly === 1) {
+        alert("GPIO is read only");
+        var gp = this.$store.state.basementApi.gpioList.find(x => x.PinName === gpio.PinName);
+        gp.State = 0;
+        state = 0;
+        console.log(gp);
+      }
     }
   }
 }

@@ -14,7 +14,19 @@
   export default {
     computed: {
       logs() {
-        return this.processItems(this.$store.getters['basementApi/logsList']);
+        var list = this.$store.getters['basementApi/logsList'];
+        console.log(list);
+
+        if (typeof list === 'string') {
+          if (list.substring(0, 1) !== '[') {
+            list = '[' + list;
+          }
+          if (list.substring(list.length, 1) !== ']') {
+            list = list + ']';
+          }
+          list = JSON.parse(list);
+        }
+        return this.processItems(list);
       }
     },
     data() {
