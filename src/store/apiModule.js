@@ -1,4 +1,5 @@
 import basementApi from '@/basementApi'
+import Vue from 'vue'
 
 const getInboxUrl = "/messages/inbox";
 const messagesUrl = "/messages/send";
@@ -20,6 +21,14 @@ const state = {
 }
 
 const mutations = {
+  updateGpio: (state, payload) => {
+    state.gpioList.forEach((gpio, index) => {
+      if (gpio.PinName === payload.gpio.PinName) {
+        console.log(gpio);
+        Vue.set(state.gpioList, index, { ...gpio, State: 0 });
+      }
+    });
+  },
   setGpio: (state, payload) => {
     state.gpioList = payload.data;
   },

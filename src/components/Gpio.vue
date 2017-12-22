@@ -49,15 +49,13 @@ export default {
       })
     },
     changeState(gpio, state) {
-      console.log(gpio.PinName);
-      console.log(state);
+      // console.log(gpio.PinName);
+      // console.log(state);
 
       if (gpio.ReadOnly === 1) {
         alert("GPIO is read only");
-        var gp = this.$store.state.basementApi.gpioList.find(x => x.PinName === gpio.PinName);
-        gp.State = 0;
         state = 0;
-        console.log(gp);
+        this.$store.commit('basementApi/updateGpio', { gpio, state })
       }
     }
   }
