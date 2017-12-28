@@ -28,10 +28,6 @@ export default {
   },
   data () {
     return {
-      // gpios2: [
-      //   { Description: "LED", PinName: "Gpio 16", State: 1, ReadOnly: false },
-      //   { Description: "Contracton", PinName: "Gpio 20", State: 0, ReadOnly: true }
-      // ],
       options: [
         { text: "Off", value: 0 },
         { text: "On", value: 1 }
@@ -40,7 +36,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getGpio: 'basementApi/getGpio'
+      getGpio: 'basementApi/getGpio',
+      setGpio: 'basementApi/setGpio'
     }),
     getGpioLocal() {
       this.getGpio()
@@ -49,13 +46,20 @@ export default {
       })
     },
     changeState(gpio, state) {
-      // console.log(gpio.PinName);
-      // console.log(state);
-
       if (gpio.ReadOnly === 1) {
         alert("GPIO is read only");
         state = 0;
         this.$store.commit('basementApi/updateGpio', { gpio, state })
+      } else {
+        let that = this;
+        this.setGpio({PinName: gpio.PinName, State: state})
+        .then((response) => {
+          that.getGpioLocal();
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(error);
+        })
       }
     }
   }

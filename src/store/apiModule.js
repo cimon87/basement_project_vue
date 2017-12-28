@@ -50,6 +50,10 @@ const mutations = {
 }
 
 const actions = {
+  setGpio(context, data) {
+    return context.state.basementApi
+    .post(gpioUrl, data);
+  },
   getGpio(context) {
     context.commit(setLoading, true);
     return context.state.basementApi
