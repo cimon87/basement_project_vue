@@ -6,7 +6,7 @@
                               v-on:change="changeState(gpio, $event)"
                               v-bind:key="index"
                               buttons
-                              button-variant="outline-primary"
+                              :button-variant="gpio.State === 1 ? 'outline-primary' : '' "
                               v-model="gpio.State">
           </b-form-radio-group>
           <br>
@@ -51,11 +51,7 @@ export default {
         state = 0;
         this.$store.commit('basementApi/updateGpio', { gpio, state })
       } else {
-        let that = this;
         this.setGpio({PinName: gpio.PinName, State: state})
-        .then((response) => {
-          that.getGpioLocal();
-        })
         .catch((error) => {
           console.log(error);
           alert(error);

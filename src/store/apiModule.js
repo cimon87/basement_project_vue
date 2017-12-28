@@ -6,9 +6,11 @@ const messagesUrl = "/messages/send";
 const getLogsUrl = "/logs";
 const gpioUrl = "/gpio";
 const setGpio = "setGpio";
+const securityStatusUrl = "/security/status";
 
 const setLoading = "setLoading";
 const sending = "sending";
+const setSecurityStatus = "setSecurityStatus";
 
 const state = {
   basementApi,
@@ -17,10 +19,14 @@ const state = {
   logsList: [],
   gpioList: [],
   isLoading: false,
-  sending: false
+  sending: false,
+  securityStatus: { Enabled: 0, SmsEnabled: 0, SilentMode: 0 }
 }
 
 const mutations = {
+  setSecurityStatus: (state, payload) => {
+    state.securityStatus = payload.data;
+  },
   updateGpio: (state, payload) => {
     state.gpioList.forEach((gpio, index) => {
       if (gpio.PinName === payload.gpio.PinName) {
@@ -50,9 +56,26 @@ const mutations = {
 }
 
 const actions = {
+  setSecurityState(context, data) {
+    return context.state.basementApi
+    .post(securityStatusUrl, data)
+    .then((response) => {
+      context.commit(setSecurityStatus, { data: response.data });
+    })
+  },
+  getSecurityStatus(context, data) {
+    return context.state.basementApi
+    .get(securityStatusUrl)
+    .then((response) => {
+      context.commit(setSecurityStatus, { data: response.data });
+    })
+  },
   setGpio(context, data) {
     return context.state.basementApi
-    .post(gpioUrl, data);
+    .post(gpioUrl, data)
+    .then((response) => {
+      context.commit(setGpio, { data: response.data });
+    })
   },
   getGpio(context) {
     context.commit(setLoading, true);
@@ -117,6 +140,9 @@ const actions = {
 }
 
 const getters = {
+  securityStatus: (state) => {
+    return state.securityStatus;
+  },
   logsList: (state) => {
     return state.logsList;
   },
